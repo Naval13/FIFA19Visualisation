@@ -1,0 +1,270 @@
+<html>
+    <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>LineCharts - D3</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js">
+        </script>
+        
+        <style>
+        
+    :root {
+      --line-chart-color: #607D8B
+    }
+        
+    div.tooltip {    
+            width: 200px;					
+            height: 80px;
+			padding: 4px;
+			background: white;	
+            position: absolute;
+            text-align: left;
+            }
+            
+.desc{
+    padding: 30px
+}
+
+
+    </style>
+        
+        <!-- Range slider code -->
+        <script src="d3RangeSlider.js"></script>
+        <link href="d3RangeSlider.css" rel="stylesheet">
+    </head>
+    
+    <body>
+        
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/1.12.1/d3-annotation.min.js"></script>
+		
+        <div style = "width: 800px; margin-left: auto;margin-right: auto;padding: 20px; text-align: center;" >
+        <p style="font-size: 20px; color: black;"><h3>How are the wages earned and ranking of players from various positional groups (like Strikers, Mid-Field, Defence, Goal-keepers) distributed and which group has the highest value? Does the Age of the player have an impact on overall performance and their wages?</h3></p>.
+        </div>
+
+    <div class="desc">
+    
+              <h4>Instructions</h4> 
+              <li>A range slider is provided, to filter out the AGE,(drag the lower or upper slider limit) </li>
+              <li>The line chart is updated according to the filter of age selection.</li>
+              <li>On hover of the line chart, the average wages earned by the player of that age is displayed.</li>
+    
+		<br/>
+        
+        </div>
+    
+        <div class="wrapper">
+    <div id="main-container" class="desc">
+      
+      <div class="line_chart-details">
+          <div id="slider-container">
+            <div id="range-label">Filter for AGE: 16 - 45</div>
+        </div>
+ 
+        
+      </div>
+      <div id="line_chart_visualisation"></div>
+        
+        <div class="desc">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Conclusion: &nbsp;</span></p>
+            <br> In Football, Age plays an effective role in  the overall rating of a player and wages they earn. From the visualisation, it is observed that as Age increases the Wages earned by a player tends to increase. The overall rating and wages earned are optimum at the age of 31 (which provides a combination of both youth and experience), and after that it tends to decrease as the player ages. The fluctionas are a result of a few experienced players which tend to earn even when their age approaches 40.</div>
+        
+    </div>
+  </div>
+        
+        
+        
+        
+	   <!-- Create a div where the graph will take place -->
+        <div id="line_chart_visualisation"></div>
+        
+        
+        
+        <script>
+            
+            // set the dimensions and margins of the graph
+            var margin = {top: 10, right: 30, bottom: 30, left: 60},
+            width = 1020 - margin.left - margin.right,
+            height = 600 - margin.top - margin.bottom;
+        
+
+            
+            var slider = createD3RangeSlider(16, 45, "#slider-container");
+                
+            slider.range(16,45);
+            console.log(slider)
+            
+
+//		    Reading the data file
+            d3.csv("age_wage.csv", function(d) {
+                // Checking whether the data has been read successfully
+                console.log(d);
+
+                create_line_chart(d)
+                
+                slider.onChange(function(newRange){
+                    d3.select("#range-label").text("Filter for AGE: " +  newRange.begin + " - " + newRange.end);
+                
+                    data = d.filter(function(d) {
+                        return (d.age > newRange.begin && d.age < newRange.end + 1)
+                    })
+                    console.log(data);
+                    
+                    d3.select("svg").remove();
+                    
+                    create_line_chart(data)
+                });
+                
+    });
+            
+        
+            
+            
+               
+         // create div for tooltip
+        var div = d3.select("body").append("div")	
+        .attr("class", "tooltip")				
+        .style("opacity", 0);
+            
+            
+            function create_line_chart(d){
+                // adding the svg object to the body of the page
+            var svg = d3.select("#line_chart_visualisation")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+                
+                // Creating X axis 
+                var x = d3.scaleLinear()
+                    .domain(d3.extent(d, function(d) { return +d.age; }))
+                    .range([ 0, width ]);
+                svg.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
+
+                
+                // Creating Y axis
+                var y = d3.scaleLinear()
+                    .domain([0, d3.max(d, function(d) { return +d.wage; })])
+                    .range([ height, 0 ]);
+                svg.append("g")
+                    .call(d3.axisLeft(y));
+
+                
+                svg.append("path")
+                    .datum(d)
+                    .attr("fill", "none")
+                    .attr("stroke", "#377eb8")
+                    .attr("stroke-width", 2)
+                    .attr("d", d3.line()
+                        .x(function(d) { return x(d.age) })
+                        .y(function(d) { return y(d.wage) })
+                    )
+                
+
+                
+               // creating circular dots
+                svg.selectAll("dot")
+                    .data(d)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", function(d) { return x(d.age) } )
+                    .attr("cy", function(d) { return y(+d.wage) } )
+                    .attr("r", 3)
+                    .style("fill", function() {
+                            return d.color = "#377eb8"; })
+                    .style("stroke", function() {
+                            return d.color = "#377eb8"; })
+                            .on("mouseover", function (d) { 
+			div.transition()
+                .style("opacity", 1);
+            
+            
+//			tooltip text
+			div.html(("Average Wage - " + d.wage))	
+                .style("top", (d3.event.y - 15) + "px")
+                .style("left", (d3.event.x + 15) + "px");
+            
+
+//      	Changing opacity of charts on hover			
+			svg.selectAll("circle")
+                .attr("opacity", 0.2); // circle opacity is updated
+			svg.selectAll("line")
+                .attr("opacity", 0.2);// multiple line charts opacity is updated
+            d3.select(this) 
+                .attr("opacity", 1);
+			
+        }) // adding mouse over functionality
+        .on("mouseout", function(d){
+      svg.selectAll("circle") // readjusting the opacity of circle
+                .attr("opacity", 1);
+            svg.selectAll("line")   // readjusting the opacity of line
+                .attr("opacity", 1);
+            div.transition()		 // time in which it re adjusts
+                .duration(200)		
+                .style("opacity", 0);
+  });// adding mouse out functionality;
+                
+                
+                             // Creating labels for  X axis:
+                svg.append("text")
+                    .attr("text-anchor", "end")
+                    .attr("x", width / 2)
+                    .attr("y", height + margin.top + 20)
+                    .text("Age(in years)");
+
+                // Creating labels for  Y axis:
+                svg.append("text")
+                    .attr("text-anchor", "end")
+                    .attr("transform", "rotate(-90)") // for vertical text
+                    .attr("x", 50 - height/ 2)
+                    .attr("y", -margin.left + 20)
+                    .text("Average Wage")
+            
+            }
+            
+            //Mouse mouse_over
+        function mouse_over(d, i) { 
+			div.transition()
+                .style("opacity", 1);
+            
+            // Checking log to know which day to sho
+            console.log(d)
+            
+//			tooltip text
+			div.html(("Average Wage - " + d.wage))	
+                .style("top", (d3.event.y - 15) + "px")
+                .style("left", (d3.event.x + 15) + "px");	
+            
+
+//      	Changing opacity of charts on hover			
+			svg.selectAll("circle")
+                .attr("opacity", 0.2); // circle opacity is updated
+			svg.selectAll("line")
+                .attr("opacity", 0.2);// multiple line charts opacity is updated
+            d3.select(this) 
+                .attr("opacity", 1);
+			
+        };
+		
+// readjusting the opacity
+        function mouse_out(d) {
+            svg.selectAll("circle") // readjusting the opacity of circle
+                .attr("opacity", 1);
+            svg.selectAll("line")   // readjusting the opacity of line
+                .attr("opacity", 1);
+            div.transition()		 // time in which it re adjusts
+                .duration(200)		
+                .style("opacity", 0);	    
+        };
+
+            
+            
+    
+	
+	    </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+id,name,age,nation,rating,club,value,wage,position
+0,Leo Messi,31,Argentina,94,FC Barcelona,Û110.5M,Û565K,Right Wing
+1,Cristiano Ronaldo,33,Portugal,94,Juventus,Û77M,Û405K,Striker
+2,Neymar Jr,26,Brazil,92,Paris Saint-Germain,Û118.5M,Û290K,Left Wing
+3,David De Gea,27,Spain,91,Manchester United,Û72M,Û260K,Goalkeeper
+4,Kevin De Bruyne,27,Belgium,91,Manchester City,Û102M,Û355K,Right Central Mid
+5,Eden Hazard,27,Belgium,91,Chelsea,Û93M,Û340K,Left Wing
+6,Luka Modric,32,Croatia,91,Real Madrid,Û67M,Û420K,Right Central Mid
+7,Luis Suarez,31,Uruguay,91,FC Barcelona,Û80M,Û455K,Striker
+8,Sergio Ramos,32,Spain,91,Real Madrid,Û51M,Û380K,Right Center Back
+9,Jan Oblak,25,Slovenia,90,Atletico Madrid,Û68M,Û94K,Goalkeeper
+10,Robert Lewandowski,29,Poland,90,FC Bayern Munchen,Û77M,Û205K,Striker
+11,Toni Kroos,28,Germany,90,Real Madrid,Û76.5M,Û355K,Left Center Mid
+12,Diego Godin,32,Uruguay,90,Atletico Madrid,Û44M,Û125K,Center Back
+13,Casemiro,26,Brazil,88,Real Madrid,Û59.5M,Û285K,Center Defensive Mid
+14,Ngolo Kante,27,France,89,Chelsea,Û63M,Û225K,Left Defensive Mid
+15,Paulo Dybala,24,Argentina,89,Juventus,Û89M,Û205K,Left Wing
+16,Harry Kane,24,England,89,Tottenham Hotspur,Û83.5M,Û205K,Striker
+17,Antoinne Griezmann,27,France,89,Atletico Madrid,Û78M,Û145K,Center Attacking Mid
+18,Marc-Andre ter Stegen,26,Germany,89,FC Barcelona,Û58M,Û240K,Goalkeeper
+19,Thibaut Courtois,26,Belgium,89,Real Madrid,Û53.5M,Û240K,Goalkeeper
+20,Sergio Busquets,29,Spain,89,FC Barcelona,Û51.5M,Û315K,Center Defensive Mid

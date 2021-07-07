@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+<style>
+
+.rectangle {
+	fill: teal;
+}
+.rectangle:hover {
+	fill: lightgreen;
+}
+.axis {
+  font: 15px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+    
+.desc{
+    padding: 30px
+}
+
+    
+        div.tooltip {    
+            width: 160px;					
+            height: 20px;
+			padding: 4px;
+			background: #f3f3f3;	
+            position: absolute;
+            text-align: center;
+            }
+    
+    
+/*    <script src="https://d3js.org/d3.v3.min.js"></script>*/
+	
+    body {
+		  overflow: hidden;
+		  margin: 0;
+		  font-size: 14px;
+		  font-family: "Helvetica Neue", Helvetica;
+		}
+
+		#chart {
+		  position: absolute;
+		  top: 50px;
+		  left: 100px;
+		}	
+</style>
+    
+    
+
+
+</head>
+<body>
+    
+        <div style = "width: 800px; margin-left: auto;margin-right: auto;padding: 20px; text-align: center;" >
+        <p style="font-size: 20px; color: black;"><h3>Which different skill sets are predominantly required for different positions in football?</h3></p>.
+        </div>
+
+<div class= "desc">
+
+              <h4>Instructions</h4> 
+              <li>According to the formations, a position is selected.</li>
+              <li>Based on the selection, top 5 stills are displayed with average required skill set.</li>
+              <li>Hover on the bar plot displays the average skill set</li>
+
+
+    <p>Select the position from the drop down below : </p>
+        
+    
+<div id="drop" align=center></div>
+
+        <!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+    <!-- Initialize a select button -->
+<select id="selectButton"></select>
+
+<!-- Create a div where the graph will take place -->
+<div id="bar_chart_visualisation"></div>
+    </div>
+
+<div class="desc">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Conclusion: &nbsp;</span></p>
+    <br> 
+    In FIFA, players playing from different positions possess different skill sets. For instance, a Striker skills like SprintSpeed, Acceleration, Agility, Balance and ShotPower play a key role. In the Midfield position, players need to have strong Balance, Agility, Acceleration, SprintSpeed, and Stamina whereas for Defender, skills like Strength, Jumping, Stamina, Standing Tackle and Aggression impact their performance and ratings.</div>
+
+
+<div style = "width: 800px; margin-left: auto;margin-right: auto;padding: 20px; text-align: center;" >
+        <p style="font-size: 20px; color: black;"><h3>What recommendations can we make to the coaches and the team management aiming to enhance their team performance by choosing correct team combinations for different formations based on different positions (as given by Q1) and also provide different options as replacement (as given by Q2)?</h3></p>.
+        </div>
+
+<div class= "desc">
+<p>
+ Upon selectionof the position, from the the above drop down menu, a recommended players are displayed along with the comparison using radar graph.
+</p>
+
+
+
+<div id="radar_plot"></div>
+
+
+    <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Conclusion: &nbsp;</span></p>
+        <br> 
+    For coaches or team management, recommendations can be provided to enhance their team performance.  A correct team combination can be chosen for different formations based on different positions. Recommendations also provide like-for-like replacements without affecting the overall team performance.
+    
+</div>
+    
+
+    
+<!-- Color Scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="RadarChart.js"></script>
+    
+    
+
+<script>
+
+var margin = {top: 60, right: 180, bottom: 90, left: 180},
+    width = 950 - margin.left - margin.right,
+    height = 380 - margin.top - margin.bottom;
+    
+        // create div for tooltip
+    var div = d3.select("body").append("div")	
+        .attr("class", "tooltip")				
+        .style("opacity", 0);
+   
+    
+    // List of groups (here I have one group per column)
+    var allGroup = ["GoalKeeper - GK", "Defender - RB", "Defender - CB", "MidFielder - DM", "MidFielder - CM", "Striker - LW", "Striker - ST", "Striker - RW"]
+    
+        // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+
+        selectedOption = selectedOption.split(' - ');
+        
+        console.log(selectedOption[0])
+        
+        // run the updateChart function with this selected option
+        update(d, selectedOption)        
+    })
+    
+        // add the options to the button
+    d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+    
+    
+// Show initial bar plot for goal keepers
+d3.csv("top_gk_skills.csv", function(error, data){
+    create_barplot(data)
+});
+        
+
+    function create_barplot(data){
+        
+        var svg = d3.select("#bar_chart_visualisation")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+        
+        
+        
+//        console.log(data)
+        
+        const yScale = d3.scaleLinear() // projecting continuous data into the diagram
+            .domain([100,0])
+            .range([0,height]);
+        
+        const xScale = d3.scaleBand() // projecting discrete data into the diagram
+            .domain(data.map(function(d){ return d.positions;}))
+            .range([0,width])
+            .paddingInner(0.05);
+        
+        const yAxis = d3.axisLeft(yScale);
+        const xAxis = d3.axisBottom(xScale);
+        
+        const yCartesian = svg.append("g")
+                            .call(yAxis)
+                        
+
+        const xCartesian = svg.append("g")
+                            .call(xAxis)
+                            .attr("transform", "translate(0," + height + ")");
+        
+        var color = d3.scaleOrdinal()
+                    .domain(data.map(function(d){ return d.positions;}))
+                    .range(['#769d46',"#ffae42", "#f95d6a", "#800080", "#5886a5"])
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+  svg.selectAll("rect").data(data).enter()
+  	.append("rect")
+    .attr("x", function (d) {
+    return xScale(d.positions)
+  })
+  .attr("y", function(d){
+    return yScale(d.average_value)
+  })
+    .attr("width", function(d, i) { return xScale.bandwidth(); })
+    .attr("height", function(d){
+    return height - yScale(d.average_value)
+  })
+  	.attr("fill", function(d){ return color(d.positions) })
+        .on("mouseover", function (d) { 
+			div.transition()
+                .style("opacity", 1);
+            
+            
+//			tooltip text
+			div.html(d.skills)	
+                .style("top", (d3.event.y - 15) + "px")
+                .style("left", (d3.event.x + 15) + "px");	
+            
+
+//      	Changing opacity of charts on hover			
+			svg.selectAll("rect")
+                .attr("opacity", 0.2); // circle opacity is updated
+            d3.select(this) 
+                .attr("opacity", 1);
+			
+        }) // adding mouse over functionality
+        .on("mouseout", function(d){
+      svg.selectAll("rect") // readjusting the opacity of circle
+                .attr("opacity", 1);
+            div.transition()		 // time in which it re adjusts
+                .duration(200)		
+                .style("opacity", 0);
+  });// adding mouse out functionality;
+    
+    
+    // Creating labels for  X axis:
+                svg.append("text")
+                    .attr("text-anchor", "end")
+                    .attr("x", width / 2)
+                    .attr("y", height + margin.top + 20)
+                    .text("Skills sets");
+
+                // Creating labels for  Y axis:
+                svg.append("text")
+                    .attr("text-anchor", "end")
+                    .attr("transform", "rotate(-90)") // for vertical text
+                    .attr("x", 50 - height/ 2)
+                    .attr("y", -margin.left + 20)
+                    .text("Average value")
+
+
+    }
+    
+
+    function update(data, selectedOption){
+        d3.selectAll("svg").remove();
+        console.log(selectedOption[1]);
+        
+        if (selectedOption[0] == "GoalKeeper"){            
+            d3.csv("top_gk_skills.csv")
+                .get(function(error, rows) {
+                
+                console.log(rows, error);
+                create_barplot(rows)
+                });
+            
+            gk_radar()
+            
+        } else if(selectedOption[0] == "Defender"){
+            d3.csv("top_defence_skills.csv")
+                .get(function(error, rows) {
+                    
+                console.log(rows, error);
+                create_barplot(rows)
+                });
+            
+            if (selectedOption[1] == "CB"){
+                cb_radar()
+            } else if (selectedOption[1] == "RB"){
+                rb_radar()
+            } else {
+                lb_radar()
+            }
+        } else if(selectedOption[0] == "MidFielder"){
+            d3.csv("top_midfield_skills.csv")
+                .get(function(error, rows) {
+                
+                console.log(rows, error);
+                create_barplot(rows)
+                });
+            if (selectedOption[1] == "CAM"){
+                cam_radar()
+            } else {
+                cdm_radar()
+            }
+        } else{
+            d3.csv("top_striker_skills.csv")
+                .get(function(error, rows) {
+
+                
+                console.log(rows, error);
+                create_barplot(rows)
+                });
+            
+            if (selectedOption[1] == "ST"){
+                st_radar()
+            } else if (selectedOption[1] == "LW"){
+                lw_radar()
+            } else {
+                rw_radar()
+            }
+            
+        }
+    }
+    
+    
+    function gk_radar(){
+//Data
+var d = [
+		  [
+			{axis:"GKReflexes",value:0.94},
+			{axis:"GKDiving",value:0.90},
+			{axis:"GKPositioning",value:0.88},
+			{axis:"GKHandling",value:0.85},
+			{axis:"GKKicking",value:0.87}
+		  ],[
+			{axis:"GKReflexes",value:0.89},
+			{axis:"GKDiving",value:0.86},
+			{axis:"GKPositioning",value:0.88},
+			{axis:"GKHandling",value:0.92},
+			{axis:"GKKicking",value:0.78}
+		  ]
+		];
+
+        create_radar_chart(d)
+        
+        
+        
+        //Legend titles
+        var LegendOptions = ['De Gea','J. Oblak'];
+        create_radar_plot(LegendOptions)
+    }
+    
+    
+    function st_radar(){
+
+
+//Data
+var d = [
+		  [
+			{axis:"SprintSpeed",value:0.91},
+			{axis:"Acceleration",value:0.89},
+			{axis:"Agility",value:0.87},
+			{axis:"Balance",value:0.70},
+			{axis:"ShotPower",value:0.95}
+		  ],[
+			{axis:"SprintSpeed",value:0.78},
+			{axis:"Acceleration",value:0.77},
+			{axis:"Agility",value:0.78},
+			{axis:"Balance",value:0.78},
+			{axis:"ShotPower",value:0.88}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+        var LegendOptions = ['Cristiano Ronaldo','R. Lewandowski'];
+        create_radar_plot(LegendOptions)
+    }
+    
+        function rw_radar(){
+
+
+//Legend titles
+var LegendOptions = ['L. Messi','L. Suárez'];
+
+//Data
+var d = [
+		  [
+			{axis:"SprintSpeed",value:0.86},
+			{axis:"Acceleration",value:0.91},
+			{axis:"Agility",value:0.91},
+			{axis:"Balance",value:0.95},
+			{axis:"ShotPower",value:0.85}
+		  ],[
+			{axis:"SprintSpeed",value:0.75},
+			{axis:"Acceleration",value:0.86},
+			{axis:"Agility",value:0.82},
+			{axis:"Balance",value:0.83},
+			{axis:"ShotPower",value:0.86}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }
+    
+            function lw_radar(){
+
+//Legend titles
+var LegendOptions = ['Neymar Jr','E. Hazard'];
+
+//Data
+var d = [
+		  [
+			{axis:"SprintSpeed",value:0.90},
+			{axis:"Acceleration",value:0.94},
+			{axis:"Agility",value:0.96},
+			{axis:"Balance",value:0.84},
+			{axis:"ShotPower",value:0.80}
+		  ],[
+			{axis:"SprintSpeed",value:0.88},
+			{axis:"Acceleration",value:0.94},
+			{axis:"Agility",value:0.95},
+			{axis:"Balance",value:0.94},
+			{axis:"ShotPower",value:0.82}
+		  ]
+		];
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }
+    
+            function cdm_radar(){
+
+
+//Legend titles
+var LegendOptions = ['Sergio Busquets','Casemiro'];
+
+//Data
+var d = [
+		  [
+			{axis:"Balance",value:0.52},
+			{axis:"Agility",value:0.66},
+			{axis:"Acceleration",value:0.50},
+			{axis:"SprintSpeed",value:0.52},
+			{axis:"Stamina",value:0.86}
+		  ],[
+			{axis:"Balance",value:0.66},
+			{axis:"Agility",value:0.62},
+			{axis:"Acceleration",value:0.59},
+			{axis:"SprintSpeed",value:0.65},
+			{axis:"Stamina",value:0.87}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }
+    
+            function cam_radar(){
+
+
+//Legend titles
+var LegendOptions = ['A. Griezmann','C. Eriksen'];
+
+//Data
+var d = [
+		  [
+			{axis:"Balance",value:0.80},
+			{axis:"Agility",value:0.90},
+			{axis:"Acceleration",value:0.88},
+			{axis:"SprintSpeed",value:0.85},
+			{axis:"Stamina",value:0.83}
+		  ],[
+			{axis:"Balance",value:0.81},
+			{axis:"Agility",value:0.79},
+			{axis:"Acceleration",value:0.75},
+			{axis:"SprintSpeed",value:0.73},
+			{axis:"Stamina",value:0.92}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }
+    
+            function rb_radar(){
+
+
+//Legend titles
+var LegendOptions = ['Azpilicueta','Carvajal'];
+
+//Data
+var d = [
+		  [
+			{axis:"Strength",value:0.71},
+			{axis:"Jumping",value:0.76},
+			{axis:"Stamina",value:0.87},
+			{axis:"StandingTackle",value:0.90},
+			{axis:"Aggression",value:0.82}
+		  ],[
+			{axis:"Strength",value:0.74},
+			{axis:"Jumping",value:0.76},
+			{axis:"Stamina",value:0.84},
+			{axis:"StandingTackle",value:0.83},
+			{axis:"Aggression",value:0.81}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }
+    
+            function lb_radar(){
+
+
+//Legend titles
+var LegendOptions = ['Marcelo','Jordi Alba'];
+
+//Data
+var d = [
+		  [
+			{axis:"Strength",value:0.78},
+			{axis:"Jumping",value:0.76},
+			{axis:"Stamina",value:0.91},
+			{axis:"StandingTackle",value:0.85},
+			{axis:"Aggression",value:0.84}
+		  ],[
+			{axis:"Strength",value:0.61},
+			{axis:"Jumping",value:0.81},
+			{axis:"Stamina",value:0.91},
+			{axis:"StandingTackle",value:0.84},
+			{axis:"Aggression",value:0.75}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }
+    
+            function cb_radar(){
+
+//Legend titles
+var LegendOptions = ['D. Godín','S. Umtiti'];
+
+//Data
+var d = [
+		  [
+			{axis:"Strength",value:0.88},
+			{axis:"Jumping",value:0.91},
+			{axis:"Stamina",value:0.66},
+			{axis:"StandingTackle",value:0.89},
+			{axis:"Aggression",value:0.89}
+		  ],[
+			{axis:"Strength",value:0.84},
+			{axis:"Jumping",value:0.89},
+			{axis:"Stamina",value:0.78},
+			{axis:"StandingTackle",value:0.89},
+			{axis:"Aggression",value:0.81}
+		  ]
+		];
+        
+        create_radar_chart(d)
+        //Legend titles
+
+        create_radar_plot(LegendOptions)
+    }    
+    
+    function create_radar_chart(d){
+        //Call function to draw the Radar chart
+        //Will expect that data is in %'s
+        RadarChart.draw("#radar_plot", d);
+    }
+    
+    function create_radar_plot(LegendOptions){
+        
+var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
+        
+var w = 500,
+	h = 500;
+            
+    var svg = d3.select('#radar_plot')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", w+300)
+	.attr("height", h)
+
+//Create the title for the legend
+var text = svg.append("text")
+	.attr("class", "title")
+	.attr('transform', 'translate(90,0)') 
+	.attr("x", w - 70)
+	.attr("y", 10)
+	.attr("font-size", "12px")
+	.attr("fill", "#404040")
+	.text("What % of skills set top players have");
+        
+        //Initiate Legend	
+var legend = svg.append("g")
+	.attr("class", "legend")
+	.attr("height", 100)
+	.attr("width", 200)
+	.attr('transform', 'translate(90,20)') 
+	;
+	//Create colour squares
+	legend.selectAll('rect')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("rect")
+	  .attr("x", w - 65)
+	  .attr("y", function(d, i){ return i * 20;})
+	  .attr("width", 10)
+	  .attr("height", 10)
+	  .style("fill", function(d, i){ return colorscale(i);})
+	  ;
+	//Create text next to squares
+	legend.selectAll('text')
+	  .data(LegendOptions)
+	  .enter()
+	  .append("text")
+	  .attr("x", w - 52)
+	  .attr("y", function(d, i){ return i * 20 + 9;})
+	  .attr("font-size", "11px")
+	  .attr("fill", "#737373")
+	  .text(function(d) { return d; });
+    }    
+    
+    gk_radar()
+
+</script>
+    
+</body>
+</html>

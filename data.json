@@ -1,0 +1,481 @@
+[
+  {
+    "name": "player.LMessi",
+    "size": 7.02,
+    "id": 0,
+    "imports": [
+      "club.FCBarcelona",
+      "nation.Argentina",
+      "position.Striker",
+      "foot.Left"
+    ]
+  },
+  {
+    "name": "player.CRonaldo",
+    "size": 4.9,
+    "id": 1,
+    "imports": [
+      "club.Juventus",
+      "nation.Portugal",
+      "position.Striker",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.NeymarJr",
+    "size": 7.53,
+    "id": 2,
+    "imports": [
+      "club.ParisSaint-Germain",
+      "nation.Brazil",
+      "position.Striker",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.DDeGea",
+    "size": 4.58,
+    "id": 3,
+    "imports": [
+      "club.ManchesterUnited",
+      "nation.Spain",
+      "position.GoalKeeper",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.KDeBruyne",
+    "size": 6.48,
+    "id": 4,
+    "imports": [
+      "club.ManchesterCity",
+      "nation.Belgium",
+      "position.Midfielder",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.EHazard",
+    "size": 5.91,
+    "id": 5,
+    "imports": [
+      "club.Chelsea",
+      "nation.Belgium",
+      "position.Striker",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.LModric",
+    "size": 4.26,
+    "id": 6,
+    "imports": [
+      "club.RealMadrid",
+      "nation.Croatia",
+      "position.Midfielder",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.LSuarez",
+    "size": 5.09,
+    "id": 7,
+    "imports": [
+      "club.FCBarcelona",
+      "nation.Uruguay",
+      "position.Striker",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.SRamos",
+    "size": 3.24,
+    "id": 8,
+    "imports": [
+      "club.RealMadrid",
+      "nation.Spain",
+      "position.Defender",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.JOblak",
+    "size": 4.32,
+    "id": 9,
+    "imports": [
+      "club.AtleticoMadrid",
+      "nation.Slovenia",
+      "position.GoalKeeper",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.RLewandowski",
+    "size": 4.9,
+    "id": 10,
+    "imports": [
+      "club.FCBayernMünchen",
+      "nation.Poland",
+      "position.Striker",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.TKroos",
+    "size": 4.86,
+    "id": 11,
+    "imports": [
+      "club.RealMadrid",
+      "nation.Germany",
+      "position.Midfielder",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.DGodin",
+    "size": 2.8,
+    "id": 12,
+    "imports": [
+      "club.AtleticoMadrid",
+      "nation.Uruguay",
+      "position.Defender",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.Casemiro",
+    "size": 3.81,
+    "id": 13,
+    "imports": [
+      "club.RealMadrid",
+      "nation.Brazil",
+      "position.Midfielder",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.NKante",
+    "size": 4.01,
+    "id": 14,
+    "imports": [
+      "club.Chelsea",
+      "nation.France",
+      "position.Midfielder",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.PDybala",
+    "size": 5.66,
+    "id": 15,
+    "imports": [
+      "club.Juventus",
+      "nation.Argentina",
+      "position.Striker",
+      "foot.Left"
+    ]
+  },
+  {
+    "name": "player.HKane",
+    "size": 5.31,
+    "id": 16,
+    "imports": [
+      "club.TottenhamHotspur",
+      "nation.England",
+      "position.Striker",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.AGriezmann",
+    "size": 4.96,
+    "id": 17,
+    "imports": [
+      "club.AtleticoMadrid",
+      "nation.France",
+      "position.Midfielder",
+      "foot.Left"
+    ]
+  },
+  {
+    "name": "player.MterStegen",
+    "size": 3.69,
+    "id": 18,
+    "imports": [
+      "club.FCBarcelona",
+      "nation.Germany",
+      "position.GoalKeeper",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "player.TCourtois",
+    "size": 3.4,
+    "id": 19,
+    "imports": [
+      "club.RealMadrid",
+      "nation.Belgium",
+      "position.GoalKeeper",
+      "foot.Left"
+    ]
+  },
+  {
+    "name": "player.SBusquets",
+    "size": 3.27,
+    "id": 20,
+    "imports": [
+      "club.FCBarcelona",
+      "nation.Spain",
+      "position.Midfielder",
+      "foot.Right"
+    ]
+  },
+  {
+    "name": "position.Striker",
+    "size": 0.38,
+    "imports": [
+      "player.LMessi",
+      "player.CRonaldo",
+      "player.NeymarJr",
+      "player.EHazard",
+      "player.LSuarez",
+      "player.RLewandowski",
+      "player.PDybala",
+      "player.HKane",
+      "player.AGriezmann"
+    ]
+  },
+  {
+    "name": "position.GoalKeeper",
+    "size": 0.19,
+    "imports": [
+      "player.DDeGea",
+      "player.MterStegen",
+      "player.TCourtois"
+    ]
+  },
+  {
+    "name": "position.Midfielder",
+    "size": 0.33,
+    "imports": [
+      "player.KDeBruyne",
+      "player.LModric",
+      "player.TKroos",
+      "player.SBusquets",
+      "player.Casemiro"
+    ]
+  },
+  {
+    "name": "position.Defender",
+    "size": 0.1,
+    "imports": [
+      "player.SRamos",
+      "player.DGodin"
+    ]
+  },
+  {
+    "name": "club.FCBarcelona",
+    "size": 0.19,
+    "imports": [
+      "player.LMessi",
+      "player.LSuarez",
+      "player.MterStegen",
+      "player.SBusquets"
+    ]
+  },
+  {
+    "name": "club.Juventus",
+    "size": 0.1,
+    "imports": [
+      "player.CRonaldo",
+      "player.PDybala"
+    ]
+  },
+  {
+    "name": "club.ParisSaint-Germain",
+    "size": 0.05,
+    "imports": [
+      "player.NeymarJr"
+    ]
+  },
+  {
+    "name": "club.ManchesterUnited",
+    "size": 0.05,
+    "imports": [
+      "player.DDeGea"
+    ]
+  },
+  {
+    "name": "club.ManchesterCity",
+    "size": 0.1,
+    "imports": [
+      "player.KDeBruyne"
+    ]
+  },
+  {
+    "name": "club.Chelsea",
+    "size": 0.1,
+    "imports": [
+      "player.EHazard",
+      "player.NKante"
+    ]
+  },
+  {
+    "name": "club.RealMadrid",
+    "size": 0.19,
+    "imports": [
+      "player.LModric",
+      "player.TCourtois",
+      "player.Casemiro"
+    ]
+  },
+  {
+    "name": "club.AtleticoMadrid",
+    "size": 0.14,
+    "imports": [
+      "player.SRamos",
+      "player.DGodin",
+      "player.AGriezmann"
+    ]
+  },
+  {
+    "name": "club.FCBayernMünchen",
+    "size": 0.05,
+    "imports": [
+      "player.RLewandowski",
+      "player.TKroos"
+    ]
+  },
+  {
+    "name": "club.TottenhamHotspur",
+    "size": 0.05,
+    "imports": [
+      "player.HKane"
+    ]
+  },
+  {
+    "name": "foot.Left",
+    "size": 0.24,
+    "imports": [
+      "player.LMessi",
+      "player.PDybala",
+      "player.AGriezmann",
+      "player.TCourtois"
+    ]
+  },
+  {
+    "name": "foot.Right",
+    "size": 0.76,
+    "imports": [
+      "player.CRonaldo",
+      "player.NeymarJr",
+      "player.DDeGea",
+      "player.KDeBruyne",
+      "player.EHazard",
+      "player.LModric",
+      "player.LSuarez",
+      "player.SRamos",
+      "player.RLewandowski",
+      "player.TKroos",
+      "player.DGodin",
+      "player.NKante",
+      "player.HKane",
+      "player.MterStegen",
+      "player.MterStegen",
+      "player.SBusquets",
+      "player.Casemiro"
+    ]
+  },
+  {
+    "name": "nation.Argentina",
+    "size": 0.1,
+    "imports": [
+      "player.LMessi",
+      "player.PDybala"
+    ]
+  },
+  {
+    "name": "nation.Portugal",
+    "size": 0.05,
+    "imports": [
+      "player.CRonaldo"
+    ]
+  },
+  {
+    "name": "nation.Brazil",
+    "size": 0.05,
+    "imports": [
+      "player.NeymarJr",
+      "player.Casemiro"
+    ]
+  },
+  {
+    "name": "nation.Germany",
+    "size": 0.1,
+    "imports": [
+      "player.TKroos",
+      "player.MterStegen"
+    ]
+  },
+  {
+    "name": "nation.France",
+    "size": 0.1,
+    "imports": [
+      "player.NKante",
+      "player.AGriezmann"
+    ]
+  },
+  {
+    "name": "nation.Spain",
+    "size": 0.19,
+    "imports": [
+      "player.DDeGea",
+      "player.SBusquets"
+    ]
+  },
+  {
+    "name": "nation.Belgium",
+    "size": 0.14,
+    "imports": [
+      "player.KDeBruyne",
+      "player.EHazard",
+      "player.TCourtois"
+    ]
+  },
+  {
+    "name": "nation.Croatia",
+    "size": 0.05,
+    "imports": [
+      "player.LModric"
+    ]
+  },
+  {
+    "name": "nation.Uruguay",
+    "size": 0.1,
+    "imports": [
+      "player.LSuarez",
+      "player.DGodin"
+    ]
+  },
+  {
+    "name": "nation.Slovenia",
+    "size": 0.05,
+    "imports": [
+      "player.JOblak"
+    ]
+  },
+  {
+    "name": "nation.Poland",
+    "size": 0.05,
+    "imports": [
+      "player.RLewandowski"
+    ]
+  },
+  {
+    "name": "nation.England",
+    "size": 0.05,
+    "imports": [
+      "player.HKane"
+    ]
+  }
+]

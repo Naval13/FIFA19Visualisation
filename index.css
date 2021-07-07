@@ -1,0 +1,203 @@
+body{
+  font-family: 'Nunito', sans-serif;
+  /* background: gray; */
+}
+#fifa19-bundle{
+  font-family: 'Nunito', sans-serif;
+}
+.node {
+  font: 15px sans-serif;
+}
+.node:hover{
+  cursor: pointer;
+}
+.wrapper{
+/*  height:700px;*/
+  margin-top: -30px;
+  /* background-color: rgb(99, 230, 153); */
+}
+
+.intro{
+    padding: 30px
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+.link {
+  stroke: gray;
+  stroke-opacity: 0.5;
+  fill: none;
+  pointer-events: none;
+}
+.graph-detail-container{
+  display:flex;
+  
+  flex-direction: column;
+}
+.bundle-details{
+  display:flex;
+  width: 80%;
+  padding: 50px;
+  
+}
+.title{
+  display: block;
+  font-size: 50px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.logo-small{
+  height: 25px;
+  cursor:pointer;
+  padding-left: 2px;
+}
+.logo{
+  height: 175px;
+}
+.fifa19-detail-title{
+  font-weight:bold;
+  font-family: 'Nunito', sans-serif;
+  font-size:35px;
+  padding: 20px;
+}
+.fifa19-methodology{
+  font-size:20px;
+  font-family: 'Nunito', sans-serif;
+  padding: 20px;
+}
+.row{
+  display: flex;
+  padding-left: 50px;
+  padding-right: 50px;
+  justify-content: space-between;
+}
+
+div.tooltip {	
+  font-family: 'Nunito', sans-serif;
+  position: absolute;			
+  text-align: center;	
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;		
+  width: 0px;					
+  display: none;
+  height: 0px;							
+  background: #E8E8E8;	
+  border: 1px solid #dcdcdc;				
+  pointer-events: none;			
+}
+
+div.tooltip-stats {	
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  height: 50px;
+  text-align: center;
+  padding: 20px;
+  font: 17px sans-serif;
+  background: #dcdcdc;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  pointer-events: none;	
+  /* opacity: 0.8;	 */
+}
+.class-stats{
+  font-family: 'Nunito', sans-serif;
+  align-items: center;
+  text-align: center;
+}
+div.tooltip-player {	
+  font-family: 'Nunito', sans-serif;
+  position: absolute;			
+  text-align: center;	
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;		
+  width: 240px;
+  padding: 5px;			
+  font: 14px sans-serif;		
+  background: #E8E8E8;	
+  border: 1px solid #dcdcdc;		
+  border-radius: 8px;			
+  pointer-events: none;			
+}
+.img-container{
+  height: 110px;
+  width: 100%;
+  border: 1px solid #dcdcdc;
+}
+.player-table{
+  height: 100%;
+  width: 100%;
+}
+.player-name{
+  font-family: 'Nunito', sans-serif;
+  height: 60px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 5px;
+}
+.player-picture-container{
+  font-family: 'Nunito', sans-serif;
+  height: 50px;
+  display: flex;
+  border: 1px solid #dcdcdc;
+  justify-content: space-between;
+  align-items: center;
+}
+.player-club{
+  font-family: 'Nunito', sans-serif;
+  height: 50px;
+  display: flex;
+  border: 1px solid #dcdcdc;
+  justify-content: space-between;
+}
+.player-info{
+  font-family: 'Nunito', sans-serif;
+  height: 20px;
+  display: flex;
+  border: 1px solid #dcdcdc;
+  justify-content: space-between;
+  align-items: center;
+}
+.image-src{
+  height:90%;
+}
+.image-detail{
+  height:85%;
+  padding-right:3px;
+}
+.pic-field{
+  text-align: left;
+}
+.pic-field-bold{
+  text-align: left;
+  font-weight:bold;
+}
+
+.pic-details-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.span-bold{
+  font-weight: bold;
+}
+.span-data{
+
+}

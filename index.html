@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FIFA19-Visualisation</title>
+  <link rel="stylesheet" href="index.css">
+  
+</head>
+<body>
+<!--  <script src="https://d3js.org/d3.v4.min.js"></script>-->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <div class="title">
+        <span style="font-family:'Times New Roman';color:#1c4587;">
+      <h2> FIFA 19 Visualization </h2>
+    </span>
+    </div>
+    
+    
+    
+    <div class= "intro">
+        <img src="https://lh4.googleusercontent.com/o18awolzpl2QQMa8AljB76MPcwsRxHWGjG5y53U4yxIgNn9e-DbRrG3Rv1yZLdIUlPvPBbNP6ouQvn4ZZzgfwFxQuOkvtrdfAXAFz3CNiVqf6QPAD8Fq4N6ZVsDMULacWN39eA89" class="center">
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:17pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">INTRODUCTION</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><span class="Apple-tab-span" style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span></span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><span class="Apple-tab-span" style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span></span></p>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">FIFA 19 is a football video game developed by Electronic Arts. As a football fan, I made an exploratory analysis on the FIFA 19 dataset using R and then converting them into visualisation using D3 to draw insights from the dataset. This project mainly focuses on creating recommendations of players through the process of visualisation.&nbsp;</span></p>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Our</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;intended audience</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;can be categorised into 3 levels, namely:</span></p>
+<ol style="margin-top:0;margin-bottom:0;">
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">User</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">: Recommend top players to be included for playing fantasy leagues.</span>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Coaches / Team Management:</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;Recommend team selection/combination based on the formation.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:13pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;">Team owners</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">: Recommend quality players within the age and budget limit.</span><span style="font-size:13pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;&nbsp;</span></p>
+    </li>
+</ol>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">SKILLS USED:&nbsp;</span></p>
+<ol style="margin-top:0;margin-bottom:0;">
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:0pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">DATA CLEANING</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">DATA WRANGLING</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none">DATA PREPROCESSING</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">DATA EXPLORATION</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">DATA VISUALISATION (Interactive charts)</span></p>
+    </li>
+</ol>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">LANGUAGES:&nbsp;</span></p>
+<ol style="margin-top:0;margin-bottom:0;">
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:0pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">EXPLORATION - TABLEAU, R</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type:decimal;font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;">
+        <p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:0pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">VISUALIZATION - JAVASCRIPT, R, D3, HTML, CSS</span></p>
+    </li>
+</ol>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">GITHUB code:&nbsp;</span></p>
+
+        <a href="https://projects.navalaggarwal.com/FIFA19/Data-Exploration-Report.pdf">EXPLORATION Report</a>
+        <br>
+        <br>
+        <a href="https://projects.navalaggarwal.com/FIFA19/Data-Visualisation-Report.pdf">VISUALISATION Report</a>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:13.999999999999998pt;font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">ABSTRACT</span><span style="font-size:13pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">:</span></p>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">As a part of our exploration, our first visualisation displays top Fifa 19 players from different countries, clubs, positional groups (i.e. Striker, Midfielders, Defenders, Goal-Keepers) and their stronger foot in an&nbsp;</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">edge bundling chart</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">. &nbsp;This provides a basic visualisation of currently top rated players in FIFA 19.</span></p>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We then focus on finding whether the age and wages earned by the player have any correlation and what inferences can be carried out from the relation. This is done with the help of a&nbsp;</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">line chart between age and the average wages earned by the player</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">.</span></p>
+<p dir="ltr" style="line-height:1.38;text-align: justify;margin-top:12pt;margin-bottom:12pt;"><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">In our recommendation, it is very important to categorize players on the basis of their position. Thus, in our next visualisation, we try to calculate the top 5 skills sets required to play in a specific position. This is done with the help of a&nbsp;</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">bar chart with different skills and the average percentage of that required skill</span><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">.</span></p>
+<p><span style="font-size:12pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Finally, the last visualisation resolves our problem statement of recommending top players for different positions in football. This narrative visualisation is carried out by comparing top 2 players of that particular position on different skill sets using radar charts</span><span style="font-size:13pt;font-family:'Times New Roman';color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">.</span></p>
+    
+    
+    <h2 ><span style="font-family:'Times New Roman';color:#1c4587;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none">FIFA 19 Visaul Exploration:&nbsp;</span></h2>
+        
+    </div>
+
+<div class="wrapper" width = "100%">    
+    <div class="row" id="main-container" >
+        
+      <div id="edge_bundling"></div>
+      <div class="bundle-details" >
+          <div class="exploration">
+              <h3>The exploration of top FIFA19 players is displayed using edge bundling graph, which contains interconnected nodes and on focus of each node, basic statistical information can be presented.  </h3>
+              <h3>Instructions</h3> 
+              <li>Features like Name, Countries, Club, Foot(preference), and Position are represented in a circular manner.</li><br>
+              <li>When hovered upon a player, it shows their basic information in terms of Overall Rating, Country, Club, Age, Position, value and wages(in euros)</li><br>
+              <li>On hovering, the interconnected nodes are displayed along with the basic information of the category selected, this makes a far better user experience while exploring the dataset.</li><br>
+        
+          </div>  
+        
+      </div>
+        
+    </div>
+  </div>
+<div id="edge_bundling"></div>
+<script>
+    document.addEventListener('DOMContentLoaded',function(e){
+
+    
+    let diameter = 600,
+    radius = diameter / 2,
+    innerRadius = radius - 130;
+
+    let cluster = d3.cluster()
+        .size([360, innerRadius]);
+
+    let line = d3.radialLine()
+        .curve(d3.curveBundle.beta(0.85))
+        .radius(function(d) { return d.y; })
+        .angle(function(d) { return d.x / 180 * Math.PI; });
+
+    let svg = d3.select("#edge_bundling").append("svg")
+        .attr("width", diameter)
+        .attr("height", diameter)
+      .append("g")
+        .attr("transform", "translate(" + radius + "," + radius + ")");
+
+    let link = svg.append("g").selectAll(".link"),
+        node = svg.append("g").selectAll(".node");
+
+    let div = d3.select("#edge_bundling").append("div")	
+      .attr("class", "tooltip")				
+      .style("opacity", 0);
+
+    var playerMap =[];        
+        d3.csv("initial_info.csv", function(d) {
+  return {
+    id: d.id,
+        name: d.name,
+        age: d.age,
+        nation: d.nation,
+        rating: d.rating,
+        club: d.club,
+        value: d.value,
+        wage: d.wage,
+        foot: d.foot,
+        position: d.position
+  };
+}, function(data, row_id) {
+            playerMap[row_id] = data;
+}).then(function(d){
+            console.log(playerMap);
+            readJsonData();
+        });
+        
+        
+        function readJsonData(){
+                  jsonData =   d3.json("data.json").then(function (classes){
+//            if (error) throw error;
+      
+      let root = hierarchial_nodes(classes)
+          .sum(function(d) {  return d.size; });
+      cluster(root);
+
+      link = link
+        .data(fetch_imports(root.leaves()))
+        .enter().append("path")
+          .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
+          .attr("class", "link")
+          .attr("d", line);
+
+      node = node
+        .data(root.leaves())
+        .enter().append("text")
+          .attr("class", "node")
+          .attr("dy", "0.31em")
+          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+          .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+          .text(function(d) { return d.data.key; })
+          .style("fill", function(d){
+            return d.data.nodeColor;
+          })
+        .on("mouseover", function(d){
+          // debugger
+          d3.selectAll(".node").style("fill", "#f3f3f3");
+          d3.selectAll(".link").style("stroke", "#f3f3f3");
+          
+          fetch_node_colors(d.data.name, d.data.nodeColor);
+
+          d.data.imports.forEach(function(name){
+            fetch_node_colors(name, d.data.nodeColor);
+            fetch_linking_color(d.data.name, name, d.data.nodeColor);
+          });
+
+          div.attr("class",`tooltip-player`);
+          div.transition()		
+              .duration(200)		
+              .style("opacity", .9);		
+
+          
+          if (d.data.nodeType === 'player') {
+            div.attr("class",`tooltip-player`);
+            div.transition()		
+              .duration(200)		
+              .style("opacity", .7);		
+            div.html("<div class='player-table'><div class='player-name'>"+d.data.tooltipName+"</div><div class='player-info'><span class='span-bold'>Country</span><span class='span-data'>"+d.data.tooltipCountry+"</span></div><div class='player-info'><span class='span-bold'>Club</span><span class='span-data'>"+d.data.tooltipClub+"</span></div><div class='player-info'><span class='span-bold'>Position</span><span class='span-data'>"+d.data.tooltipPosition+"</span></div><div class='player-info'><span class='span-bold'>Rating</span><span class='span-data'>"+d.data.tooltipRating+"</span></div><div class='player-info'><span class='span-bold'>Value</span><span class='span-data'>"+d.data.tooltipValue+"</span></div><div class='player-info'><span class='span-bold'>Wages</span><span class='span-data'>"+d.data.tooltipWage+"</span></div><div class='player-info'><span class='span-bold'>Age</span><span class'span-data'>"+d.data.tooltipAge+"</span></div></div>")	
+              .style("left", (d3.event.pageX + 70) + "px")		
+              .style("top", (d3.event.pageY - 200) + "px");
+          } else {
+            div.attr("class",`tooltip-stats`);
+            div.transition()		
+              .duration(200)		
+              .style("opacity", .7);	
+              if (d.data.nodeType === 'foot'){
+                  div.html("<div class='class-stats'>" + d.data.linkCount + " players are " + d.data.key+" footer.</div>")	
+                    .style("left", (d3.event.pageX + 50) + "px")		
+                    .style("top", (d3.event.pageY - 60) + "px");	
+              } else if (d.data.nodeType === 'position'){
+
+                  div.html("<div class='class-stats'>" + d.data.linkCount + " players play as a " + d.data.key+".</div>")	
+                    .style("left", (d3.event.pageX + 50) + "px")		
+                    .style("top", (d3.event.pageY - 60) + "px");	
+              } else{
+            div.html("<div class='class-stats'>" + d.data.key + " have " + d.data.linkCount+" top rated players in the list.</div>")	
+              .style("left", (d3.event.pageX + 50) + "px")		
+              .style("top", (d3.event.pageY - 60) + "px");	
+              }
+          }
+          })	
+        
+        .on("mouseout", function(d){
+          d3.selectAll(".node")
+          .style("fill", function(d){
+            return d.data.nodeColor;
+          });
+          d3.selectAll(".link").style("stroke", "gray");
+
+          // div.attr("class",`tooltip`);
+          div.transition()		
+            .duration(500)		
+            .style("opacity", 0);	
+        });
+        })
+        }
+        
+    
+    
+    
+    function hierarchial_nodes(classes) {
+      let map = {};
+
+      function find(name, data) {
+        let node = map[name], i;          
+        if (!node) {
+          node = map[name] = data || {name: name, children: []};
+          if (name.length) {
+            node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+            node.parent.children.push(node);
+            node.key = name.substring(i + 1);
+            
+            if (node.imports) {
+              node.linkCount = node.imports.length;
+            }
+            if (node.name.includes('player')) {
+              node.nodeType = 'player';
+              node.nodeColor = '#769d46';
+              node.countText = '';
+
+              if (node.key!=="player") {
+                node.tooltipName = playerMap[node.id].name;
+                node.tooltipCountry = playerMap[node.id].nation;
+                node.tooltipRating = playerMap[node.id].rating;
+                node.tooltipPosition = playerMap[node.id].position;
+                node.tooltipAge = playerMap[node.id].age;
+                node.tooltipClub = playerMap[node.id].club;
+                node.tooltipValue = playerMap[node.id].value;
+                node.tooltipWage = playerMap[node.id].wage;
+                node.tooltipFoot = playerMap[node.id].foot;
+                
+              }
+            } else if (node.name.includes('nation')){
+              node.nodeType = 'nation';
+              node.nodeColor = '#ffae42';
+              node.countText = 'that are from ';
+            } else if (node.name.includes('club')){
+              node.nodeType = 'club';
+              node.nodeColor = '#f95d6a';
+              node.countText = 'that play for ';
+            } else if (node.name.includes('foot')){
+              node.nodeType = 'foot';
+              node.nodeColor = '#800080';
+              node.countText = 'whose preferred foot is their ';
+            } else if (node.name.includes('position')){
+              node.nodeType = 'position';
+              node.nodeColor = '#5886a5';
+              node.countText = 'whose preferred position is ';
+            }
+          }
+        }
+
+        return node;
+      }
+
+      classes.forEach(function(d) {
+        find(d.name, d);
+      });
+
+      return d3.hierarchy(map[""]);
+    }
+
+    function fetch_imports(nodes) {
+      let map = {},
+          imports = [];
+
+      nodes.forEach(function(d) {
+        map[d.data.name] = d;
+      });
+
+      nodes.forEach(function(d) {
+        if (d.data.imports) d.data.imports.forEach(function(i) {
+          imports.push(map[d.data.name].path(map[i]));
+        });
+      });
+
+      return imports;
+    }
+
+    function fetch_linking_color(src,tgt,color){
+      let link_selections = d3.selectAll(".link");
+      let link = link_selections.nodes().filter(function(d){
+        return (d3.select(d).data()[0].source.data.name == src && d3.select(d).data()[0].target.data.name == tgt);
+      });
+      // debugger
+      d3.selectAll(link).style("stroke",color);
+    }
+    
+    function fetch_node_colors(name,color){
+      let node_selections = d3.selectAll(".node");
+      let node = node_selections.nodes().filter(function(d){
+        return d3.select(d).data()[0].data.name == name;
+      });
+      d3.selectAll(node).style("fill", color);
+    }
+  });
+      
+      
+    </script>
+
+
+<div class="tooltip"></div>
+    
+    <div style="margin-left: -100px; width: 1080px;margin-left: auto;margin-right: auto;overflow-x: hidden;"> 
+        <iframe src="age_vs_wage.html" width="100%" height="1380px" frameborder = "0" style="font-size: 18px"></iframe> 
+    </div>
+    
+    <div style="margin-left: -100px; width: 1080px;margin-left: auto;margin-right: auto;overflow-x: hidden;"> 
+        <iframe src="bar_and_radar_plot.html" width="100%" height="1700px" frameborder = "0" style="font-size: 18px"></iframe> 
+    </div>
+      
+
+    
+</body>
+</html>
